@@ -1,0 +1,23 @@
+{
+	"name": "C/C++ Profiling Lab",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": "."
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools-extension-pack"
+			],
+			"settings": {
+				"C_Cpp.default.cppStandard": "c++17",
+				"C_Cpp.default.cStandard": "c11",
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+		}
+	},
+	"forwardPorts": [],
+	"postCreateCommand": "echo 'Dev container ready! Run make to see available targets.'",
+	"remoteUser": "vscode"
+}

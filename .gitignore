@@ -1,0 +1,28 @@
+# Profiling outputs
+gmon.out
+profile-*.txt
+*.gcov
+*.gcda
+*.gcno
+
+# Build directory
+build/
+
+# Valgrind outputs
+callgrind.out.*
+cachegrind.out.*
+massif.out.*
+
+# Editor files
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.old
