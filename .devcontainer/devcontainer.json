@@ -2,7 +2,7 @@
 	"name": "C/C++ Profiling Lab",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"context": "."
+		"context": ".."
 	},
 	"customizations": {
 		"vscode": {
