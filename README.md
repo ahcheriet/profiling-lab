@@ -50,14 +50,43 @@ profiling/
 │   ├── devcontainer.json    # VS Code devcontainer configuration
 │   └── Dockerfile            # Container with GCC, gprof, Valgrind
 ├── src/
-│   ├── example1.c            # Inefficient prime number detection
+│   ├── example1.c            # Prime number detection (nested loops)
 │   ├── example2.c            # Recursive vs iterative Fibonacci
 │   ├── example3.cpp          # Bubble Sort vs Quick Sort
-│   └── example4.cpp          # Memory allocation patterns
+│   ├── example4.cpp          # Memory allocation patterns
+│   ├── example5.c            # Matrix multiplication (O(n³) complexity)
+│   ├── example6.c            # Linear search (multiple calls)
+│   ├── example7.c            # String processing and pattern matching
+│   └── example8.c            # Computational geometry (distance calculations)
 ├── Makefile                  # Build and profiling automation
 ├── README.md                 # This file
-└── lab-guide.md              # Detailed profiling concepts and exercises
+├── lab-guide.md              # Detailed profiling concepts and exercises
+└── QUICK-REFERENCE.md        # Quick profiling cheat sheet
 ```
+
+## 🎯 Example Programs Overview
+
+### C Examples (Recommended for Learning)
+
+These examples have **cleaner profiling output** without C++ standard library noise:
+
+| Example | Description | Execution Time | Key Learning |
+|---------|-------------|----------------|--------------|
+| **example1.c** | Prime number detection | ~0.1s | Nested loops, O(n²) complexity |
+| **example2.c** | Fibonacci (recursive/iterative) | ~2-3s | Exponential vs linear time |
+| **example5.c** | Matrix multiplication | ~0.5-1s | O(n³) algorithm, cache effects |
+| **example6.c** | Linear search | ~2-3s | O(n) search, multiple function calls |
+| **example7.c** | String pattern matching | ~3-4s | String processing overhead |
+| **example8.c** | Computational geometry | ~3-5s | Mathematical functions, call distribution |
+
+### C++ Examples
+
+| Example | Description | Note |
+|---------|-------------|------|
+| **example3.cpp** | Sorting algorithms | Shows std:: library calls in profile |
+| **example4.cpp** | Memory allocations | Good for Valgrind testing |
+
+**Tip:** Start with C examples (1, 2, 5-8) for clearer profiling results!
 
 ## 🛠️ How to Use
 
@@ -66,14 +95,18 @@ profiling/
 All programs are compiled with the `-pg` flag for profiling support:
 
 ```bash
-make example1
+make example5  # Matrix multiplication - good for beginners
 ```
 
-Available examples:
-- `make example1` - Prime number detection (nested loops)
+Available examples (see `make help` for full list):
+- `make example1` - Prime number detection
 - `make example2` - Fibonacci (recursive vs iterative)
-- `make example3` - Sorting algorithms comparison
-- `make example4` - Memory allocation patterns
+- `make example5` - Matrix multiplication
+- `make example6` - Linear search
+- `make example7` - String processing
+- `make example8` - Computational geometry
+- `make example3` - Sorting algorithms (C++)
+- `make example4` - Memory allocations (C++)
 
 Or compile all at once:
 ```bash
@@ -85,7 +118,7 @@ make
 Running the program generates a `gmon.out` file containing profiling data:
 
 ```bash
-make run-example1
+make run-example5
 ```
 
 Or run the executable directly:
@@ -100,21 +133,23 @@ After execution, you'll see `gmon.out` in your directory.
 Use `gprof` to analyze the profiling data:
 
 ```bash
-make profile-example1
+make profile-example5
 ```
 
 This will:
 1. Run the program (generating `gmon.out`)
 2. Generate a profile report using `gprof`
-3. Save the report to `profile-example1.txt`
+3. Save the report to `profile-example5.txt`
 
 View the report:
 ```bash
-cat profile-example1.txt | less
+cat profile-example5.txt | less
 ```
 
 Or open it in VS Code:
 ```bash
+code profile-example5.txt
+```
 code profile-example1.txt
 ```
 
@@ -153,6 +188,67 @@ index % time    self  children    called     name
 This helps identify which calling patterns are expensive.
 
 ## 🎯 Example Workflows
+
+### Recommended: Example 5 - Matrix Multiplication
+
+**Best for first-time users** - clear output, reasonable execution time (~0.5-1 second):
+
+```bash
+# Compile and profile
+make profile-example5
+
+# View the report
+cat profile-example5.txt | less
+```
+
+**What to look for:**
+- `matrix_multiply_naive` takes 100% of execution time
+- Clear demonstration of O(n³) complexity
+- Simple C code, no library function noise
+
+### Example 6: Search Performance
+
+Shows the cost of linear search with many function calls (~2-3 seconds):
+
+```bash
+make profile-example6
+cat profile-example6.txt | less
+```
+
+**What to look for:**
+- `linear_search` called 10,000 times
+- See how repeated function calls add up
+- Good example of call graph analysis
+
+### Example 7: String Processing
+
+Demonstrates string manipulation overhead (~3-4 seconds):
+
+```bash
+make profile-example7
+cat profile-example7.txt | less
+```
+
+**What to look for:**
+- `naive_string_search` dominates execution time
+- Multiple helper functions for text processing
+- Character frequency analysis distribution
+
+### Example 8: Computational Geometry
+
+Shows mathematical function calls and distribution (~3-5 seconds):
+
+```bash
+make profile-example8
+cat profile-example8.txt | less
+```
+
+**What to look for:**
+- `calculate_distance` called millions of times
+- `sqrt` function overhead from math library
+- Nested loop performance in geometric algorithms
+
+---
 
 ### Example 1: Finding Prime Numbers
 
