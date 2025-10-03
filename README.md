@@ -23,8 +23,8 @@ A hands-on educational project for learning program profiling in C and C++ using
 
 1. **Clone this repository:**
    ```bash
-   git clone <repository-url>
-   cd profiling
+   git clone https://github.com/ahcheriet/profiling-lab.git
+   cd profiling-lab
    ```
 
 2. **Open in VS Code:**
