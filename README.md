@@ -302,6 +302,48 @@ make clean-all
 - Profiling results may vary between runs
 - The devcontainer ensures consistent results across different host OSes
 
+## 🔧 Troubleshooting
+
+### Devcontainer Won't Build
+
+If you get an error when opening the devcontainer:
+
+1. **Make sure Docker is running:**
+   - Windows/Mac: Check Docker Desktop is running
+   - Linux: `sudo systemctl status docker`
+
+2. **Pull the latest changes:**
+   ```bash
+   git pull origin main
+   ```
+
+3. **Rebuild the container:**
+   - Press `Ctrl+Shift+P` / `Cmd+Shift+P`
+   - Select "Dev Containers: Rebuild Container"
+
+4. **Check Docker resources:**
+   - Ensure Docker has at least 2GB RAM allocated
+   - Docker Desktop → Settings → Resources
+
+### Common Issues
+
+**"gprof: No such file or directory"**
+- Solution: Make sure you're inside the devcontainer
+- Look for "Dev Container: C/C++ Profiling Lab" in the bottom-left corner of VS Code
+
+**"gmon.out not found"**
+- Solution: The program must be compiled with `-pg` flag and executed at least once
+- Use `make profile-exampleX` instead of running manually
+
+**"No time accumulated" in profile**
+- Solution: Program ran too fast to profile
+- Increase the workload (e.g., change `int limit = 10000;` to `100000`)
+
+**Container build fails on ARM/M1 Mac**
+- Solution: The GCC image supports ARM64, but if issues persist:
+  - Add `"platform": "linux/amd64"` to `devcontainer.json` under `build`
+  - Rebuild the container
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
